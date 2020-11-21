@@ -18,8 +18,26 @@ const schema = new mongoose.Schema({
         default: Date.now
     },
     avatar: {
-        type: String
-    }
+        type: String,
+        required: true
+    },
+    firstName: {
+        type: String,
+        default: ''
+    },
+    lastName: {
+        type: String,
+        default: ''
+    },
+    birthDate: {
+        type: Date,
+        default: null
+    },
+    posted: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'User',
+        default: []
+    }]
 })
 
-module.exports = User = mongoose.model('user',schema)
+module.exports = User = mongoose.model('User',schema)
