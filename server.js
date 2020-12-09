@@ -8,6 +8,7 @@ const register = require('./routes/register')
 const post = require('./routes/post')
 const auth = require('./routes/auth')
 const posts = require('./routes/posts')
+const comment = require('./routes/comment')
 
 const app = express()
 app.use(bodyParser.json())
@@ -21,6 +22,7 @@ app.use('/register',register)
 app.use('/post',post)
 app.use('/auth',auth)
 app.use('/posts',posts)
+app.use('/comment',comment)
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
