@@ -1,5 +1,6 @@
 const express = require('express')
 const Joi = require('joi')
+const gravatar = require('gravatar')
 const Post = require('../models/Post')
 const User = require('../models/User')
 const { Auth } = require('../middlewares/auth')
@@ -42,7 +43,6 @@ router.post('/', async (req, res) => {
                     const Temp = await Post.find({})
                     Posts.push(...Temp)
                     //console.log('logg')
-                    res.json(Posts)
                 } else if (filter.mainTag.length === 0) {
                     const Temp = await Post.find({})
                     filter.subTag.forEach((tag, i) => {
@@ -63,7 +63,6 @@ router.post('/', async (req, res) => {
                             })
                         })
                     })
-                    res.json(Posts)
 
                 } else if (filter.subTag.length === 0) {
                     const Temp = await Post.find({})
@@ -74,7 +73,6 @@ router.post('/', async (req, res) => {
                             }
                         })
                     })
-                    res.json(Posts)
 
                 } else {
                     const Temp = await Post.find({})
@@ -103,8 +101,17 @@ router.post('/', async (req, res) => {
                             })
                         })
                     })
-                    res.json(Posts)
                 }
+                Posts.forEach((data) => {
+                    if (data.anonymous === true) {
+                        let random = Math.floor(Math.random() * 10000)
+                        //console.log(random)
+                        data.authorName = "Anonymous"
+                        const avatar = gravatar.url(`${random}`, {s: "200", r: "x", d: "retro"})
+                        data.avatar = avatar
+                    }
+                })
+                res.json(Posts)
             }
         } catch(err) {
             console.log(err.message)
