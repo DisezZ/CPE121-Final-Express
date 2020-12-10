@@ -36,7 +36,9 @@ router.post('/', async (req, res) => {
                     avatar: checkToken.id.avatar,
                     anonymous: anonymous,
                     mainTag: mainTag,
-                    subTag: subTag
+                    subTag: subTag,
+                    upvoted: [],
+                    liked: []
                 })
                 await post.save()
                 const user = await User.findById(checkToken.id.id)

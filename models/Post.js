@@ -30,6 +30,14 @@ const schema = new mongoose.Schema({
         ref: 'Comment',
         default: []
     }],
+    liked: [{
+        userID: mongoose.Types.ObjectId,
+        userName: String
+    }],
+    upvoted: [{
+        userID: mongoose.Types.ObjectId,
+        userName: String
+    }],
     anonymous: {
         type: Boolean,
         required: true

@@ -18,13 +18,13 @@ router.post('/', async (req, res) => {
         res.json({error: `${error.details[0].message}`})
     } else {
         try {
-            let { error } = await Auth(req.body)
-            console.log(req.body)
+            let { error, id } = await Auth(req.body)
+            //console.log(id)
             if(error) {
                 res.json({error: "invalid token"})
                 console.log({error: "invalid token"})
             } else {
-                res.json({value: 'finished'})
+                res.json({value: 'finished', userInfo: id})
             }
         } catch(err) {
             console.log(err.message)

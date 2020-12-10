@@ -42,7 +42,7 @@ router.post('/', async (req, res) => {
                     Posts.avatar = avatar
                 }
                 Comments.forEach((data, index) => {
-                    console.log(index)
+                    //console.log(index)
                     //console.log(data)
                     if (data.anonymous === true) {
                         let random = Math.floor(Math.random() * 10000)
