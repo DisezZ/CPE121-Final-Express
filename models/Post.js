@@ -31,12 +31,22 @@ const schema = new mongoose.Schema({
         default: []
     }],
     liked: [{
-        userID: mongoose.Types.ObjectId,
-        userName: String
+        _id: false,
+        userID: {
+            type: mongoose.Types.ObjectId,
+        },
+        username: {
+            type: String
+        }
     }],
     upvoted: [{
-        userID: mongoose.Types.ObjectId,
-        userName: String
+        _id: false,
+        userID: {
+            type: mongoose.Types.ObjectId,
+        },
+        username: {
+            type: String
+        }
     }],
     anonymous: {
         type: Boolean,

@@ -27,25 +27,45 @@ router.post('/', async (req, res) => {
                 res.json({error: "invalid token"})
             } else {
                 const post = await Post.findById(Types.ObjectId(to))
-                const check = -1;
+                var check = -1;
                 if (action === "like") {
                     post.liked.forEach((likedBy, index) => {
-                        if (likedBy === id.id) {
+                        if (likedBy.userID == id.id) {
                             check = index
                         }
                     })
                     if (check === -1) {
-                        post.liked.push(id.id)
+                        post.liked.push({
+                            userID: id.id,
+                            username: id.username
+                        })
                         res.json({value: 'finished'})
                     } else {
-                        const temp = post.liked.splice(check, 1)
-                        post.liked = temp
-                        console.log(post.liked)
+                        post.liked.splice(check, 1)
+                        post.liked.splice(check, 1)
                         res.json({value: 'finished'})
                     }
                     post.save()
+                    //console.log(post.liked.length)
                 } else if (action === "upvote") {
-                    post.upvoted.push(id.id)
+                    post.upvoted.forEach((upvotedBy, index) => {
+                        if (upvotedBy.userID == id.id) {
+                            check = index
+                        }
+                    })
+                    if (check === -1) {
+                        post.upvoted.push({
+                            userID: id.id,
+                            username: id.username
+                        })
+                        res.json({value: 'finished'})
+                    } else {
+                        post.upvoted.splice(check, 1)
+                        post.upvoted.splice(check, 1)
+                        res.json({value: 'finished'})
+                    }
+                    post.save()
+                    //console.log(post.liked.length)
                 }
             }
         } catch (error) {
