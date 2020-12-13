@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
     const { error, value } = schema.validate(req.body)
 
     if(error) {
-        res.status(400).json({error: `${error.details[0].message}`})
+        res.json({error: `${error.details[0].message}`})
     } else {
         const { username, email, password } = req.body
 
@@ -43,7 +43,7 @@ router.post('/', async (req, res) => {
                 }
                 jwt.sign(payload, config.jwtSecret, {expiresIn:'7d'}, (err,token) => {
                     if(err) throw err
-                    res.json({token:`${token}`})
+                    res.json({token:`${token}`, value: "finished"})
                 })
             }
         } catch(err) {

@@ -14,12 +14,6 @@ const schema = Joi.object().keys({
     subTag: Joi.array().items(Joi.string())
 })
 
-router.get('/', async (req, res) => {
-    const Posts = await Post.find({})
-    res.status(200).json(Posts)
-    //console.log('log posts')
-})
-
 router.post('/', async (req, res) => {
     const { error, value } = schema.validate(req.body)
 
