@@ -13,7 +13,7 @@ const schema = Joi.object().keys({
     token: Joi.string().required(),
     anonymous: Joi.boolean().required(),
     mainTag: Joi.string().required(),
-    subTag: Joi.array().max(5).items(Joi.string())
+    subTag: Joi.array().max(4).items(Joi.string())
 })
 
 router.post('/', async (req, res) => {

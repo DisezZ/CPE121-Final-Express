@@ -34,6 +34,7 @@ router.post('/', async (req, res) => {
                     content: content,
                     avatar: checkToken.id.avatar,
                     anonymous: anonymous,
+                    dateCreated: Date.now()
                 })
                 await comment.save()
                 const post = await Post.findById(Types.ObjectId(to))

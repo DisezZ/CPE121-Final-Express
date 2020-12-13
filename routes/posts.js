@@ -10,10 +10,8 @@ const router = express.Router()
 
 const schema = Joi.object().keys({
     token: Joi.string().required(),
-    filter: Joi.object().keys({
-        mainTag: Joi.array().items(Joi.string()),
-        subTag: Joi.array().items(Joi.string())
-    })
+    mainTag: Joi.array().items(Joi.string()),
+    subTag: Joi.array().items(Joi.string())
 })
 
 router.get('/', async (req, res) => {
@@ -29,9 +27,9 @@ router.post('/', async (req, res) => {
         res.json({error: `${error.details[0].message}`})
     } else {
 
-        //console.log(value.filter.mainTag)
+        //console.log(value.mainTag)
         //res.json(value)
-        const { token, filter } = req.body
+        const { token, mainTag, subTag } = req.body
 
         try {
             const checkToken = await Auth(req.body)
@@ -39,13 +37,13 @@ router.post('/', async (req, res) => {
                 res.json({error: "invalid token"})
             } else {
                 const Posts = []
-                if (filter.mainTag.length === 0 && filter.subTag.length === 0 ) {
+                if (mainTag.length === 0 && subTag.length === 0 ) {
                     const Temp = await Post.find({})
                     Posts.push(...Temp)
                     //console.log('logg')
-                } else if (filter.mainTag.length === 0) {
+                } else if (mainTag.length === 0) {
                     const Temp = await Post.find({})
-                    filter.subTag.forEach((tag, i) => {
+                    subTag.forEach((tag, i) => {
                         Temp.forEach((data, j) => {
                             data.subTag.forEach((subTag) => {
                                 if (tag === subTag) {
@@ -64,9 +62,9 @@ router.post('/', async (req, res) => {
                         })
                     })
 
-                } else if (filter.subTag.length === 0) {
+                } else if (subTag.length === 0) {
                     const Temp = await Post.find({})
-                    filter.mainTag.forEach((tag, i) => {
+                    mainTag.forEach((tag, i) => {
                         Temp.forEach((data, j) => {
                             if(tag === data.mainTag) {
                                 Posts.push(data)
@@ -76,14 +74,14 @@ router.post('/', async (req, res) => {
 
                 } else {
                     const Temp = await Post.find({})
-                    filter.mainTag.forEach((tag, i) => {
+                    mainTag.forEach((tag, i) => {
                         Temp.forEach((data, j) => {
                             if(tag === data.mainTag) {
                                 Posts.push(data)
                             }
                         })
                     })
-                    filter.subTag.forEach((tag, i) => {
+                    subTag.forEach((tag, i) => {
                         Temp.forEach((data, j) => {
                             data.subTag.forEach((subTag) => {
                                 if (tag === subTag) {
